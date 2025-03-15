@@ -1,0 +1,88 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block main %}
+  <div class="row mt-0">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="header-title">Add Category</h4>
+        </div>
+        <div class="card-body pt-0">
+          <form action="" method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            {% if cat %}
+            <div class="mb-3 row">
+                <div class="col-4">
+              <label for="name" class="form-label fw-semibold">Category Name:</label>
+              <input type="text" class="form-control" id="name" value="{{ cat.name }}" name="name"  placeholder="Enter Category's name" />
+              <div class="invalid-feedback">Please enter the Category's name.</div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid row">
+                <div class="col-4">
+                <input type="hidden" value="{{ cat.catid }}" name="cid" />
+              <button type="submit" name="submit" value="update" class="btn btn-primary btn-md"><i class="mdi mdi-content-save"></i> Update</button>
+              <button type="submit" name="submit" value="cancel" class="btn btn-danger btn-md"><i class="mdi mdi-close"></i> Cancel</button>
+            </div>
+            </div>
+            {% else %}
+            <!-- Author Name -->
+            <div class="mb-3 row">
+                <div class="col-4">
+              <label for="name" class="form-label fw-semibold">Category Name:</label>
+              <input type="text" class="form-control" id="name" name="name" required placeholder="Enter Category's name" />
+              <div class="invalid-feedback">Please enter the Category's name.</div>
+                </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="d-grid row">
+                <div class="col-4">
+              <button type="submit" name="submit" value="save" class="btn btn-primary btn-md"><i class="mdi mdi-content-save"></i> Save</button>
+            </div>
+            </div>
+            {% endif %}
+            
+          </form>
+        </div>
+        <div class="table-responsive p-2">
+          <table class="table table-hover m-0 table-actions-bar table-bordered">
+            <thead>
+              <tr>
+                <th>Sr No.</th>
+                <th>Category Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if Category %}
+                {% for c in Category %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>
+                      <i class="mdi mdi-pencil text-primary"></i> {{ c.name }}
+                    </td>
+                    <td>
+                      <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ c.catid }}" name="cid" />
+                        <button type="submit" name="submit" value="edit" class="border-0"><a href="#" class="table-action-btn"><i class="mdi mdi-pencil"></i></a></button>
+                        <button type="submit" name="submit" value="del" class="border-0"><a href="#" class="table-action-btn"><i class="mdi mdi-close"></i></a></button>
+                      </form>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="10" class="text-center text-danger fw-semibold">Sorry, no Category found!</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

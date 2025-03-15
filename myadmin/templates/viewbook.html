@@ -1,0 +1,161 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block main %}
+  <div class="row mt-0">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="header-title">All Books</h4>
+          <p class="card-subtitle">Your operations goes here.</p>
+        </div>
+        <div class="card-body pt-2">
+          <form action="" method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            {% if mybook %}
+              <!-- Author Name -->
+              <div class="mb-3 row">
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Book Name:</label>
+                  <input type="text" class="form-control" value="{{mybook.title}}" id="name" name="title" required placeholder="Enter book's name" />
+                  <div class="invalid-feedback">Please enter the book's name.</div>
+                </div>
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">ISBN:</label>
+                  <input type="number" class="form-control" id="isbn" value="{{mybook.isbn}}" name="isbn" required placeholder="Enter ISBN" />
+                  <div class="invalid-feedback">Please enter the book's ISBN.</div>
+                </div>
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Total Copies:</label>
+                  <input type="number" class="form-control" id="total_copies" value="{{mybook.total_copies}}" name="total_copies" required placeholder="Enter Total Copies" />
+                  <div class="invalid-feedback">Please enter the Total Copies.</div>
+                </div>
+              </div>
+
+              <!-- Author Birth Date -->
+              <div class="mb-3 row">
+                <div class="col-4">
+                  <label for="dob" class="form-label fw-semibold">Available Copies:</label>
+                  <input type="number" class="form-control" id="available_copies" value="{{mybook.available_copies}}" name="available_copies" required placeholder="Enter Available Copies" />
+                  <div class="invalid-feedback">Please enter the Available Copies.</div>
+                </div>
+                <div class="col-4">
+                  <label for="author" class="form-label fw-semibold">Book Author:</label>
+                  <select name="author" id="cars" class="form-control" required>
+                    {% if authors %}
+                      <option id="author" value="None">Select Author</option>
+                      {% for a in authors %}
+                        <option id="author" value="{{ a.aid }}">{{ a.name }}</option>
+                      {% endfor %}
+                    {% else %}
+                      <option id="author" value="">NO Author</option>
+                    {% endif %}
+                  </select>
+                  <div class="invalid-feedback">Please select author.</div>
+                </div>
+
+                <div class="col-4">
+                  <label for="dob" class="form-label fw-semibold">Book category:</label>
+                  <select name="cat" id="cars" class="form-control" required>
+                    {% if Category %}
+                      <option id="author" value="None">Select Category</option>
+                      {% for c in Category %}
+                        <option id="author" value="{{ c.catid }}">{{ c.name }}</option>
+                      {% endfor %}
+                    {% else %}
+                      <option id="author" value="">NO Author</option>
+                    {% endif %}
+                  </select>
+                  <div class="invalid-feedback">Please select category.</div>
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <div class="col-4">
+                  <label for="dob" class="form-label fw-semibold">Published date:</label>
+                  <input type="date" class="form-control" id="published_date" name="published_date" />
+                  <div class="invalid-feedback">Please select published_date.</div>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="d-grid row">
+                <div class="col-4">
+                  <input type="hidden" value="{{mybook.bid}}" name="bid" />
+                  <button type="submit" name="submit" value="update" class="btn btn-primary btn-md"><i class="mdi mdi-content-save"></i> Update</button>
+                  <button type="submit" name="submit" value="cancel" class="btn btn-danger btn-md"><i class="mdi mdi-close"></i> Cancel</button>
+                </div>
+              </div>
+            {% else %}
+            {% comment %} <p>Sorry Not Found</p> {% endcomment %}
+            {% endif %}
+          </form>
+
+          <div class="table-responsive">
+            <table class="table table-hover m-0 table-actions-bar">
+              <thead>
+                <tr>
+                  <th>Sr No.</th>
+                  <th>pro</th>
+                  <th>Name</th>
+                  <th>author</th>
+                  <th>category</th>
+                  <th>isbn</th>
+                  <th>published_date</th>
+                  <th>total_copies</th>
+                  <th>available_copies</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if books %}
+                {% for b in books %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                  <td><img src="{% static '' %}{{b.Bpic}}" alt="contact-img" title="contact-img" class="rounded-circle avatar-sm" />
+                  </td>
+
+                  <td> <h5 class="m-0 fw-medium">{{b.title}}</h5></td>
+
+                  <td>
+                    <i class="mdi mdi-pencil text-primary"></i> {{b.author}}
+                  </td>
+
+                  <td>
+                    <i class="mdi mdi-book text-success"></i> {{b.category}}
+                  </td>
+
+                  <td>
+                    <i class="text-warning"></i> {{b.isbn}}
+                  </td>
+                  <td>
+                    <i class="mdi mdi-calendar-check text-warning"></i> {{b.published_date}}
+                  </td>
+                  <td>
+                    <i class="text-warning"></i> {{b.total_copies}}
+                  </td>
+                  <td>
+                    <i class="text-warning"></i> {{b.available_copies}}
+                  </td>
+
+                  <td>
+                    <form action="" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" value="{{ b.bid }}" name="bid" />
+                      <button type="submit" name="submit" value="edit" class="border-0"><a href="#" class="table-action-btn"><i class="mdi mdi-pencil"></i></a></button>
+                      <button type="submit" name="submit" value="del" class="border-0"><a href="#" class="table-action-btn"><i class="mdi mdi-close"></i></a></button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="10" class="text-center text-danger fw-semibold">Sorry, no books found!</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

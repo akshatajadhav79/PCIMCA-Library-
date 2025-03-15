@@ -1,0 +1,55 @@
+{% extends 'studadmin.html' %}
+{% load static %}
+{% block main %}
+  <div class="card">
+    <div class="card-body pt-0">
+      <div class="table-responsive p-2">
+        <table class="table table-hover m-0 table-actions-bar table-bordered">
+          <thead>
+            <tr>
+              <th>Sr No.</th>
+              <th>Book Name</th>
+              <th>Student Name</th>
+              <th>Issued Date</th>
+              <th>Due Date</th>
+              <th>Return Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if IBR %}
+              {% for b in IBR %}
+              {% if b.user == user %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+
+                  <td>
+                    <i class="mdi mdi-pencil text-primary"></i> {{ b.book }}
+                  </td>
+                  <td>
+                      <i class="mdi mdi-pencil text-primary"></i> {{ b.user }}
+                    </td>
+
+                  <td>
+                    <i class="mdi mdi-book text-success"></i> {{ b.Issueded_date }}
+                  </td>
+                  <td>
+                    <i class="mdi mdi-book text-success"></i> {{ b.due_date }}
+                  </td>
+                  
+                  <td>
+                    <i class="mdi mdi-book text-success"></i> {{ b.returned_date }}
+                  </td>
+                </tr>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="10" class="text-center text-danger fw-semibold">Sorry, no books found!</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

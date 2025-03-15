@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Register | Adminox</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}" />
+
+    <!-- C3 Chart css -->
+    <link href="{% static '/vendor/c3/c3.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Vendor css -->
+    <link href="{% static '/css/vendor.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="{% static '/css/app.min.css' %}" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- Icons css -->
+    <link href="{% static '/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Theme Config Js -->
+    <script src="{% static '/js/config.js' %}"></script>
+    <!-- << Main.css >> -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <!-- Custom Styles -->
+    <style>
+        .container-fluid {
+          height: 100vh;
+        }
+  
+        .image-section {
+          background: url("{% static 'images/hero/hero-book.png' %}") no-repeat center center;
+          background-size: cover;
+          height: 100%;
+        }
+  
+        .form-section {
+          display: flex;
+          background-color: #d0e1e7;
+          padding: 20px;
+        }
+  
+        .login-card {
+          width: 100%;
+          max-width: 600px;
+          background: white;
+          box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+          border-radius: 10px;
+          padding: 30px;
+        }
+  
+        .form-control {
+          height: 45px;
+        }
+      </style>
+  </head>
+
+  <body>
+    {% include 'alert.html' %}
+    <div class="container-fluid">
+      <div class="row h-100">
+        <!-- Left: Image Section -->
+        <div class="col-lg-6 d-none d-lg-block image-section" style="background-color:#d0e1e7 ;">
+          <div class="text-center mt-5">
+            <i class="bi bi-lock" style="color: blue; font-size: 3.8em;"></i>
+            <h2 class="text-sm text-nowrap">Create an Account</h2>
+          </div>
+          <div class="text-center mt-3">
+            <p>
+              Already have an account? <a href="{% url 'Tlogin_user' %}">Login</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: Forgot Password Form -->
+        <div class="col-lg-6 d-flex align-items-center justify-content-center form-section">
+          <div class="login-card">
+            <form action="" method="POST">
+              {% csrf_token %}
+
+              <div class="mb-3 pt-0">
+                <label for="username" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="username" name="fullname" required placeholder="Enter username" />
+              </div>
+              <div class="mb-3 pt-0">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required placeholder="Enter username" />
+              </div>
+
+              <div class="mb-3 pt-0">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required placeholder="Enter email" />
+              </div>
+
+              <div class="mb-3 pt-0">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required placeholder="Enter password" />
+              </div>
+
+              <div class="mb-3 pt-0">
+                <label for="confirm-password" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm-password" name="cpassword" required placeholder="Confirm password" />
+              </div>
+
+              <button class="btn btn-primary w-100 theme-btn text-center" type="submit">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

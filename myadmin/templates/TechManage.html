@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block main %}
+  <div class="row mt-0">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="header-title">Manage Teacher</h4>
+        </div>
+
+        <div class="table-responsive p-2">
+          <table class="table table-hover m-0 table-actions-bar table-bordered">
+            <thead>
+              <tr>
+                <th>Sr No.</th>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Is active</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if tech %}
+                {% for s in tech %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>
+                      <i class="mdi mdi-pencil text-primary"></i> {{ s.full_name }}
+                    </td>
+
+                    <td>
+                      <i class="mdi mdi-email-outline text-success"></i> {{ s.email }}
+                    </td>
+                    <td>
+                      <i class="mdi mdi-phone text-success"></i> {{ s.contact }}
+                    </td>
+                    <td>
+                      <i class="mdi mdi-mail-ru text-success"></i> {{ s.is_active }}
+                    </td>
+
+                    <td>
+                      <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ s.uid }}" name="uid" />
+                        <button type="submit" name="submit" value="del" class="border-0"><a href="#" class="table-action-btn"><i class="mdi mdi-close"></i></a></button>
+                      </form>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="10" class="text-center text-danger fw-semibold">Sorry, no books found!</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+
+  <!-- Mirrored from coderthemes.com/adminox/layouts/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Jan 2025 07:14:11 GMT -->
+  <head>
+    <meta charset="utf-8" />
+    <title>Dashboard | Adminox - Responsive Bootstrap 5 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}" />
+
+    <!-- C3 Chart css -->
+    <link href="{% static '/vendor/c3/c3.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Vendor css -->
+    <link href="{% static '/css/vendor.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="{% static '/css/app.min.css' %}" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- Icons css -->
+    <link href="{% static '/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Theme Config Js -->
+    <script src="{% static '/js/config.js' %}"></script>
+    <!-- << Main.css >> -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  </head>
+  <body>
+    {% include 'alert.html' %}
+    <section class="" style="background-color: #d0e1e7;">
+      <!-- Jumbotron -->
+      <div class="px-4 mt-4 px-md-5 text-center text-lg-start">
+        <div class="container">
+          <div class="row m-auto justify-content-center align-items-center">
+            <div class="col-lg-6 d-md-none d-lg-block mb-lg-0">
+              <div class="row">
+                <div class="col-sm-11">
+                  <img src="{% static 'images/books/book-shape.png' %}" />
+                </div>
+                <div class="col-sm-1 frame-shape4 float-bob-x">
+                  <img src="{% static 'images/hero/frame-shape.png' %}" />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 mb-5 mb-lg-0">
+              <div class="card my-5 m-auto text-centerx" style="height: 520px; width: 400px; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; border: none; float: right;">
+                <div class="row p-1 py-4">
+                  <div class="col-md-12 justify-content-center">
+                    <div class="row justify-content-center">
+                      <div class="col-md-8 py-1 text-center">
+                        <i class="bi bi-person-circle" style="color: blue; font-size: 2.8em;"></i>
+                        <h2>Forgot Password</h2>
+                      </div>
+                    </div>
+                    <form class="" action="" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      {% if org %}
+                        <div class="row py-1 justify-content-center">
+                          <div class="col-md-8">
+                            <label for="">Email</label>
+                            <input type="email" class="form-control" name="email" />
+                          </div>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="col-md-8">
+                            <label for="">Password</label>
+                            <input type="text" class="form-control" name="password" />
+                          </div>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="col-md-8">
+                            <label for="">Confirm Password</label>
+                            <input type="text" class="form-control" name="cpassword" />
+                          </div>
+                        </div>
+                        <div class="row py-2 justify-content-center">
+                          <div class="col-md-8">
+                            <button class="btn btn-success w-100 theme-btn text-center"  type="submit" name="submit" value="Reset">Reset Password</button>
+                          </div>
+                        </div>
+                      {% else %}
+                        <div class="row pt-4 justify-content-center">
+                          <div class="col-md-8">
+                            <label for="">Enter Email</label>
+                            <input type="email" class="form-control" name="email" />
+                          </div>
+                        </div>
+
+                        <div class="row py-3 justify-content-center">
+                          <div class="col-md-8">
+                            <button class="btn btn-success w-100 theme-btn text-center" type="submit" name="submit" value="send">Send Mail</button>
+                          </div>
+                        </div>
+                      {% endif %}
+
+                      
+                      <div class="row py-1 justify-content-center">
+                        <div class="col-md-8 justify-content-center text-center">
+                          <a class="large" href="/myadmin/admin_login" style="color: #036280;">Return to Login</a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Jumbotron -->
+    </section>
+
+    <script src="{% static '/js/vendor.min.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static '/js/app.js' %}"></script>
+
+    <!-- C3 Chart -->
+    <script src="{% static '/vendor/d3/d3.min.js' %}"></script>
+    <script src="{% static '/vendor/c3/c3.min.js' %}"></script>
+
+    <script src="{% static '/vendor/echarts/echarts.min.js' %}"></script>
+
+    <!-- Projects Analytics Dashboard App js -->
+    <script src="{% static '/js/pages/dashboard-sales.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Forgot Password | Adminox</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}" />
+
+    <!-- C3 Chart css -->
+    <link href="{% static '/vendor/c3/c3.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Vendor css -->
+    <link href="{% static '/css/vendor.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="{% static '/css/app.min.css' %}" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- Icons css -->
+    <link href="{% static '/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Theme Config Js -->
+    <script src="{% static '/js/config.js' %}"></script>
+    <!-- << Main.css >> -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+    <!-- Custom Styles -->
+ 
+  <style>
+    .container-fluid {
+      height: 100vh;
+    }
+
+    .image-section {
+      background: url("{% static 'images/big/img-2.jpg' %}") no-repeat center center;
+      background-size: cover;
+      height: 100%;
+    }
+
+    .form-section {
+      display: flex;
+      background-color: #d0e1e7;
+      padding: 20px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px;
+      background: white;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      border-radius: 10px;
+    }
+
+    .form-control {
+      height: 45px;
+    }
+  </style>
+</head>
+  <body>
+    {% include "alert.html" %}
+    <div class="container-fluid">
+      <div class="row h-100">
+        <!-- Left: Image Section -->
+        <div class="col-lg-6 d-none d-lg-block image-section" ></div>
+
+        <!-- Right: Forgot Password Form -->
+        <div class="col-lg-6 col-sm-6 d-flex align-items-center justify-content-center form-section">
+          <div class="login-card">
+            <div class="text-center mb-3 ">
+              <i class="bi bi-lock"></i>
+              <h2>Forgot Password?</h2>
+            </div>
+
+            <form action="" method="POST">
+              {% csrf_token %}
+              {% if stud %}
+                <div class="row justify-content-center">
+                  <div class="col-md-8">
+                    <label for="">Email</label>
+                    <input type="email" class="form-control" name="email" />
+                  </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-md-8">
+                    <label for="">Password</label>
+                    <input type="text" class="form-control" name="password" />
+                  </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-md-8">
+                    <label for="">Confirm Password</label>
+                    <input type="text" class="form-control" name="cpassword" />
+                  </div>
+                </div>
+                <div class="row py-2 justify-content-center">
+                  <div class="col-md-8">
+                    <button class="btn btn-success w-100 theme-btn text-center" type="submit" name="submit" value="Reset">Reset Password</button>
+                  </div>
+                </div>
+              {% else %}
+                <div class="row pt-1 justify-content-center">
+                  <div class="col-md-8">
+                    <label for="">Enter Email</label>
+                    <input type="email" class="form-control" name="email" />
+                  </div>
+                </div>
+
+                <div class="row py-3 justify-content-center">
+                  <div class="col-md-8">
+                    <button class="btn btn-success w-100 theme-btn text-center" type="submit" name="submit" value="send">Send Mail</button>
+                  </div>
+                </div>
+              {% endif %}
+
+              <div class="row py-1 justify-content-center">
+                <div class="col-md-8 justify-content-center text-center">
+                  <a class="large" href="/users/Tlogin_user" style="color: #036280;">Return to Login</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

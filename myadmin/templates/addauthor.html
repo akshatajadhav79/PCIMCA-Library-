@@ -1,0 +1,113 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block main %}
+  <div class="row mt-0">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="header-title">Add Author</h4>
+        </div>
+        <div class="card-body pt-0">
+          <form action="" method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            {% if aut %}
+            <div class="mb-3 row">
+                <div class="col-4">
+              <label for="name" class="form-label fw-semibold">Author Name:</label>
+              <input type="text" class="form-control" id="name" value="{{ aut.name }}" name="name" placeholder="Enter author's name" />
+              <div class="invalid-feedback">Please enter the author's name.</div>
+                </div>
+            </div>
+
+            <!-- Author Birth Date -->
+            <div class="mb-3 row">
+                <div class="col-4">
+              <label for="dob" class="form-label fw-semibold">Author Birth Date:</label>
+              <input type="date" class="form-control" id="dob" name="dob" value="{{aut.birth_date|date:'Y-m-d'}}" />
+              <div class="invalid-feedback">Please select the birth date.</div>
+            </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid row">
+                <div class="col-4">
+                <input type="hidden" value="{{ aut.aid }}" name="aid" />
+              <button type="submit" name="submit" value="update" class="btn btn-primary btn-md"><i class="mdi mdi-content-save"></i> Update</button>
+              <button type="submit" name="submit" value="cancel" class="btn btn-danger btn-md"><i class="mdi mdi-close"></i> Cancel</button>
+            </div>
+            </div>
+            {% else %}
+            <!-- Author Name -->
+            <div class="mb-3 row">
+                <div class="col-4">
+              <label for="name" class="form-label fw-semibold">Author Name:</label>
+              <input type="text" class="form-control" id="name" value="{{ a.name }}" name="name" required placeholder="Enter author's name" />
+              <div class="invalid-feedback">Please enter the author's name.</div>
+                </div>
+            </div>
+
+            <!-- Author Birth Date -->
+            <div class="mb-3 row">
+                <div class="col-4">
+              <label for="dob" class="form-label fw-semibold">Author Birth Date:</label>
+              <input type="date" class="form-control" id="dob" name="dob" required />
+              <div class="invalid-feedback">Please select the birth date.</div>
+            </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid row">
+                <div class="col-4">
+              <button type="submit" name="submit" value="save" class="btn btn-primary btn-md"><i class="mdi mdi-content-save"></i> Save</button>
+            </div>
+            </div>
+            {% endif %}
+            
+          </form>
+        </div>
+        <div class="table-responsive p-2">
+          <table class="table table-hover m-0 table-actions-bar table-bordered">
+            <thead>
+              <tr>
+                <th>Sr No.</th>
+                <th>Author Name</th>
+                <th>birth_date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if author %}
+                {% for a in author %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>
+                      <i class="mdi mdi-pencil text-primary"></i> {{ a.name }}
+                    </td>
+
+                    <td>
+                      <i class="mdi mdi-book text-success"></i> {{ a.birth_date }}
+                    </td>
+
+                    <td>
+                      <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ a.aid }}" name="aid" />
+                        <button type="submit" name="submit" value="edit" class="border-0"><a href="#" class="table-action-btn"><i class="mdi mdi-pencil"></i></a></button>
+                        <button type="submit" name="submit" value="del" class="border-0"><a href="#" class="table-action-btn"><i class="mdi mdi-close"></i></a></button>
+                      </form>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="10" class="text-center text-danger fw-semibold">Sorry, no books found!</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+
+  <!-- Mirrored from coderthemes.com/adminox/layouts/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 30 Jan 2025 07:14:11 GMT -->
+  <head>
+    <meta charset="utf-8" />
+    <title>Dashboard | Adminox - Responsive Bootstrap 5 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}" />
+
+    <!-- C3 Chart css -->
+    <link href="{% static '/vendor/c3/c3.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Vendor css -->
+    <link href="{% static '/css/vendor.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="{% static '/css/app.min.css' %}" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- Icons css -->
+    <link href="{% static '/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Theme Config Js -->
+    <script src="{% static '/js/config.js' %}"></script>
+    <!-- << Main.css >> -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    
+  </head>
+  <body>
+    {% include "alert.html" %}
+    <section class="" style="background-color: #d0e1e7;">
+      <!-- Jumbotron -->
+      <div class="px-4 mt-4 px-md-5 text-center text-lg-start">
+        <div class="container">
+          <div class="row m-auto justify-content-center gx-lg-5 align-items-center">
+            <div class="col-lg-6 d-md-none d-lg-block mb-5 mb-lg-0">
+              <h1 class="my-5 display-3 fw-bold ls-tight">
+                The New best Friend <br />
+                <span class="">for you</span>
+                <span class="text-bg-info-gradient theme-btn">Books</span>
+              </h1>
+              <p style="color: hsl(217, 10%, 50.8%)">Books is hiler for every situvations</p>
+            </div>
+
+            <div class="col-lg-5 mb-5 mb-lg-0">
+              <div class="card my-5 m-auto text-centerx" style="height: 450px; width: 400px; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; border: none; float: right;">
+                <div class="row p-1 py-4">
+                  <div class="col-md-12 justify-content-center">
+                    <div class="row justify-content-center">
+                      <div class="col-md-8 py-1 text-center">
+                        <i class="bi bi-person-circle" style="color: blue; font-size: 3.8em;"></i>
+                        <h2>Sign In</h2>
+                      </div>
+                    </div>
+                    <form class="" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                      <div class="row py-1 justify-content-center">
+                        <div class="col-md-8">
+                          <label for="">Username</label>
+                          <input type="text" class="form-control" name="username" />
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-8">
+                          <label for="">Password</label>
+                          <input type="text" class="form-control" name="password" />
+                          <a href="{% url 'admin_forgetpass' %}" class="text-center" style="color: #036280;">Forgot Password</a>
+                        </div>
+                      </div>
+                      <div class="row py-2 justify-content-center">
+                        <div class="col-md-8">
+                          <button class="btn btn-primary w-100 theme-btn text-center" type="submit" name="submit" value="Login">Login</button>
+                        </div>
+                      </div>
+
+                      
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Jumbotron -->
+    </section>
+
+    <script src="{% static '/js/vendor.min.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static '/js/app.js' %}"></script>
+
+    <!-- C3 Chart -->
+    <script src="{% static '/vendor/d3/d3.min.js' %}"></script>
+    <script src="{% static '/vendor/c3/c3.min.js' %}"></script>
+
+    <script src="{% static '/vendor/echarts/echarts.min.js' %}"></script>
+
+    <!-- Projects Analytics Dashboard App js -->
+    <script src="{% static '/js/pages/dashboard-sales.js' %}"></script>
+  </body>
+</html>  
