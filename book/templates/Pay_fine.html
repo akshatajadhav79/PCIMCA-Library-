@@ -1,0 +1,138 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main %}
+  <div class="row mt-0">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="header-title">All Fines & Book Records</h4>
+        </div>
+        <div class="card-body pt-0">
+            <form action="" method="post" class="needs-validation" novalidate>
+              {% csrf_token %}
+              {% if IBR_obj %}
+                <!-- Author Name -->
+                <div class="mb-3 row">
+                  <div class="col-4">
+                    <label for="name" class="form-label fw-semibold">Book Name:</label>
+                    <input type="text" class="form-control" value="{{IBR_obj.book.title}}" id="name" name="book" required  readonly/>
+                    <div class="invalid-feedback">Please enter the book's name.</div>
+                  </div>
+                  <div class="col-4">
+                    <label for="name" class="form-label fw-semibold">borrower Name:</label>
+                    <input type="text" class="form-control" value="{{IBR_obj.user.full_name}}" id="name" name="name" required readonly />
+                    <div class="invalid-feedback">Please enter the book's name.</div>
+                  </div>
+                  <div class="col-4">
+                    <label for="name" class="form-label fw-semibold">Fine Amount:</label>
+                    <input type="number" class="form-control" id="amount" name="amount" value="{{IBR_obj.user.full_name}}" required placeholder="Enter Fine amount" />
+                    <div class="invalid-feedback">Please enter the Total amount.</div>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-4">
+                        <label for="name" class="form-label fw-semibold">Book Due date:</label>
+                        <input type="date" class="form-control" value="{{IBR_obj.due_date|date:'Y-m-d'}}" id="due_date" name="due_date" required  readonly aria-readonly="true"/>
+                        <div class="invalid-feedback">Please enter the book's return date.</div>
+                      </div>
+                    <div class="col-4">
+                      <label for="name" class="form-label fw-semibold">Book Return date:</label>
+                      <input type="date" class="form-control" value="{{IBR_obj.returned_date|date:'Y-m-d'}}" id="returned_date" name="returned_date" required  />
+                      <div class="invalid-feedback">Please enter the book's return date.</div>
+                    </div>
+                    
+                  </div>
+                <!-- Submit Button -->
+                <div class="d-grid row">
+                  <div class="col-4">
+                    <input type="text" value="{{IBR_obj.brid}}" name="rid" />
+                    <button type="submit" name="submit" value="save" class="btn btn-primary btn-md"><i class="mdi mdi-content-save"></i> Save</button>
+                    <button type="submit" name="submit" value="cancel" class="btn btn-danger btn-md"><i class="mdi mdi-close"></i> Cancel</button>
+                  </div>
+                </div>
+              {% else %}
+                <div class=" row">
+                  
+                </div>
+              {% endif %}
+            </form>
+          </div>
+        <div class="table-responsive card-body p-2 pt-0">
+          <table class="table table-hover m-0 table-actions-bar table-bordered">
+            <thead>
+              <tr>
+                <th>Sr No.</th>
+                <th>Book Name</th>
+                <th>Student Name</th>
+                <th>Issued Date</th> 
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Fine</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if IBR %}
+                {% for b in IBR %}
+                  <tr {% if b.is_overdue %}class="table-danger"{% endif %}>
+                    <td>{{ forloop.counter }}</td>
+                    <td><i class="mdi mdi-pencil text-primary"></i> {{ b.book }}</td>
+                    <td><i class="mdi mdi-pencil text-primary"></i> {{ b.user }}</td>
+                    <td><i class="mdi mdi-book text-success"></i> {{ b.Issueded_date }}</td>
+                    <td><i class="mdi mdi-book text-success"></i> {{ b.due_date }}</td>
+
+                    <form action="" method="post">
+                      <td>
+                        <input type="date" class="form-control" name="retundate" 
+                               value="{{ b.returned_date|date:'Y-m-d' }}" />
+                      </td>
+
+                      <!-- Fine Calculation -->
+                      <td>
+                        {% if b.is_overdue %}
+                          <span class="text-danger fw-bold">₹{{ b.fine.amount }}</span>
+                        {% else %}
+                          <span class="text-success text-nowrap">No Fine</span>
+                        {% endif %}
+                      </td>
+
+                      <td>
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ b.brid }}" name="rid" />
+                        {% if b.is_overdue %}
+                        <button type="submit" name="submit" value="fine" class="border-0 btn btn-primary">
+                          <i class="mdi mdi-book"></i> Pay Fine
+                        </button>
+                        {% else %}
+                        <span class="text-success text-nowrap text-center text-sm">
+                          <i class="mdi mdi-book "></i>NO Fine
+                        </span>
+                        {% endif %}
+                        
+                      </td>
+                    </form>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="10" class="text-center text-danger fw-semibold">Sorry, no books found!</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Alert for Overdue Books -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let overdueBooks = document.querySelectorAll("tr.table-danger");
+      if (overdueBooks.length > 0) {
+        alert("⚠️ Some books are overdue! Please check the fines.");
+      }
+    });
+  </script>
+{% endblock %}

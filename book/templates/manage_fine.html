@@ -1,0 +1,139 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main %}
+  <div class="row mt-0">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="header-title">All Fines & Book Records</h4>
+        </div>
+        
+        <div class="table-responsive card-body p-2 pt-0">
+          <table class="table table-hover m-0 table-actions-bar table-bordered">
+            <thead>
+              <tr>
+                <th>Sr No.</th>
+                <th>Book Name</th>
+                <th>Student Name</th>
+                <th>Issued Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Fine</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if IBR %}
+                {% for b in IBR %}
+                  <tr {% if b.is_overdue %}class="table-danger"{% endif %}>
+                    <td>{{ forloop.counter }}</td>
+                    <td><i class="mdi mdi-pencil text-primary"></i> {{ b.book }}</td>
+                    <td><i class="mdi mdi-pencil text-primary"></i> {{ b.user }}</td>
+                    <td><i class="mdi mdi-book text-success"></i> {{ b.Issueded_date }}</td>
+                    <td><i class="mdi mdi-book text-success"></i> {{ b.due_date }}</td>
+
+                    <form action="" method="post">
+                      <td>
+                        <input type="date" class="form-control" name="retundate" 
+                               value="{{ b.returned_date|date:'Y-m-d' }}" />
+                      </td>
+
+                      <!-- Fine Calculation -->
+                      <td>
+                        {% if b.is_overdue %}
+                          <span class="text-danger fw-bold">₹{{ b.fine.amount }}</span>
+                        {% else %}
+                          <span class="text-success">No Fine</span>
+                        {% endif %}
+                      </td>
+
+                      <td>
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ b.brid }}" name="rid" />
+                        {% if b.is_overdue %}
+                        <button type="submit" name="submit" value="fine" class="border-0 btn btn-primary">
+                          <i class="mdi mdi-book"></i> Pay Fine
+                        </button>
+                        {% else %}
+                        <span class="text-success text-nowrap text-center text-sm">
+                          <i class="mdi mdi-book "></i>NO Fine
+                        </span>
+                        {% endif %}
+                      </td>
+                    </form>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="10" class="text-center text-danger fw-semibold">Sorry, no books found!</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+        <!--Paided fine-->
+        <div class="table-responsive card-body p-2 pt-0">
+          <table class="table table-hover m-0 table-actions-bar table-bordered">
+            <thead>
+              <tr>
+                <th>Sr No.</th>
+                <th>Book Name</th>
+                <th>Student Name</th>
+                <th>Issued Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Fine</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if fine %}
+                {% for b in fine %}
+                  <tr {% if b.is_overdue %}class="table-danger"{% endif %}>
+                    <td>{{ forloop.counter }}</td>
+                    <td><i class="mdi mdi-pencil text-primary"></i> {{ b.borrow_record.book }}</td>
+                    <td><i class="mdi mdi-pencil text-primary"></i> {{ b.borrow_record.user }}</td>
+                    <td><i class="mdi mdi-book text-success"></i> {{ b.borrow_record.Issueded_date }}</td>
+                    <td><i class="mdi mdi-book text-success"></i> {{ b.borrow_record.due_date }}</td>
+
+                    <form action="" method="post">
+                      <td>
+                        <input type="date" class="form-control" name="retundate" 
+                               value="{{ b.borrow_record.returned_date|date:'Y-m-d' }}" />
+                      </td>
+
+                      <!-- Fine Calculation -->
+                      <td>
+                        {% if b.is_overdue %}
+                          <span class="text-danger fw-bold">₹{{ b.amount }}</span>
+                        {% else %}
+                          <span class="text-success">No Fine</span>
+                        {% endif %}
+                      </td>
+
+                    </form>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="10" class="text-center text-danger fw-semibold">Sorry, no books found!</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Alert for Overdue Books -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let overdueBooks = document.querySelectorAll("tr.table-danger");
+      if (overdueBooks.length > 0) {
+        alert("⚠️ Some books are overdue! Please check the fines.");
+      }
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block main %}
+  <div class="row mt-0">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="header-title">Book Issues</h4>
+        </div>
+        <div class="card-body pt-0">
+          <form action="" method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            {% if rec %}
+            <!-- Author Name -->
+            <div class="mb-3 row">
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Select Book:</label>
+                  <select name="book" id="book" class="form-control" required>
+                    {% if Books %}
+                      <option id="book" value="{{rec.book.bid}}">{{rec.book}}</option>
+                      {% for a in Books %}
+                        <option id="book" value="{{ a.bid }}">{{ a.title }}</option>
+                      {% endfor %}
+                    {% else %}
+                      <option id="book" value="">NO Book</option>
+                    {% endif %}
+                  </select>
+                  <div class="invalid-feedback">Please enter the book's name.</div>
+                </div>
+  
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Select Student:</label>
+                  <select name="user" id="user" class="form-control" required>
+                    {% if studs %}
+                      <option id="user" value="{{rec.user.uid}}">{{rec.user}}</option>
+                      {% for a in studs %}
+                        <option id="user" value="{{ a.uid }}">{{ a.full_name }}</option>
+                      {% endfor %}
+                    {% else %}
+                      <option id="user" value="">NO Student</option>
+                    {% endif %}
+                  </select>
+                  <div class="invalid-feedback">Please enter the student's name.</div>
+                </div>
+  
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Issued Date:</label>
+                  <input type="date" name="Issueded_date" id="Issueded_date" required class="form-control" value="{{ rec.Issueded_date|date:'Y-m-d' }}"/>
+                  <div class="invalid-feedback">Please enter the Issued date.</div>
+                </div>
+              </div>
+  
+              <div class="mb-3 row">
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Due Date:</label>
+                  <input type="date" name="due_date" id="due_date" required class="form-control" value="{{ rec.due_date|date:'Y-m-d' }}"/>
+                  <div class="invalid-feedback">Please enter the due date.</div>
+                </div>
+              </div>
+            <div class="d-grid row">
+                <div class="col-4">
+                  <input type="hidden" value="{{rec.brid}}" name="rid" />
+                  <button type="submit" name="submit" value="update" class="btn btn-primary btn-md"><i class="mdi mdi-content-save"></i> Update</button>
+                  <button type="submit" name="submit" value="cancel" class="btn btn-danger btn-md"><i class="mdi mdi-close"></i> Cancel</button>
+                </div>
+              </div>
+            {% else %}
+            <div class="mb-3 row">
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Select Book:</label>
+                  <select name="book" id="book" class="form-control" required>
+                    {% if Books %}
+                      {% comment %} <option id="book" value="None">Select Book</option> {% endcomment %}
+                      {% for a in Books %}
+                        <option id="book" value="{{ a.bid }}">{{ a.title }}</option>
+                      {% endfor %}
+                    {% else %}
+                      <option id="book" value="">NO Book</option>
+                    {% endif %}
+                  </select>
+                  <div class="invalid-feedback">Please enter the book's name.</div>
+                </div>
+  
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Select Student:</label>
+                  <select name="user" id="user" class="form-control" required>
+                    {% if studs %}
+                      {% comment %} <option id="author" value="None">Select Student</option> {% endcomment %}
+                      {% for a in studs %}
+                        <option id="author" value="{{ a.uid }}">{{ a.full_name }}</option>
+                      {% endfor %}
+                    {% else %}
+                      <option id="author" value="">NO Student</option>
+                    {% endif %}
+                  </select>
+                  <div class="invalid-feedback">Please enter the student's name.</div>
+                </div>
+  
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Issued Date:</label>
+                  <input type="date" name="Issueded_date" id="Issueded_date" required class="form-control" />
+                  <div class="invalid-feedback">Please enter the Issued date.</div>
+                </div>
+              </div>
+  
+              <div class="mb-3 row">
+                <div class="col-4">
+                  <label for="name" class="form-label fw-semibold">Due Date:</label>
+                  <input type="date" name="due_date" id="due_date" required class="form-control" />
+                  <div class="invalid-feedback">Please enter the due date.</div>
+                </div>
+              </div>
+            <div class="d-grid row">
+                <div class="col-4">
+                  <button type="submit" name="submit" value="save" class="btn btn-primary btn-md"><i class="mdi mdi-content-save"></i> Save</button>
+                </div>
+              </div>
+            {% endif %}
+          </form>
+        </div>
+        <div class="table-responsive p-2">
+          <table class="table table-hover m-0 table-actions-bar table-bordered">
+            <thead>
+              <tr>
+                <th>Sr No.</th>
+                <th>Book Name</th>
+                <th>Student Name</th>
+                <th>Issued Date</th>
+                <th>Due Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if IBR %}
+                {% for b in IBR %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>
+                      <i class="mdi mdi-pencil text-primary"></i> {{ b.book }}
+                    </td>
+                    <td>
+                        <i class="mdi mdi-pencil text-primary"></i> {{ b.user }}
+                      </td>
+
+                    <td>
+                      <i class="mdi mdi-book text-success"></i> {{ b.Issueded_date }}
+                    </td>
+                    <td>
+                      <i class="mdi mdi-book text-success"></i> {{ b.due_date }}
+                    </td>
+                    
+                    <td>
+                      <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ b.brid }}" name="rid" />
+                        <button type="submit" name="submit" value="edit" class="border-0"><a href="#" class="table-action-btn"><i class="mdi mdi-pencil"></i></a></button>
+                        <button type="submit" name="submit" value="del" class="border-0"><a href="#" class="table-action-btn"><i class="mdi mdi-close"></i></a></button>
+                      </form>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="10" class="text-center text-danger fw-semibold">Sorry, no books found!</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
